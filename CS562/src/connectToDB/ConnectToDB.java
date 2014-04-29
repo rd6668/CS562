@@ -3,12 +3,12 @@ package connectToDB;
 import java.sql.*;
 
 public class ConnectToDB {
-	public static ResultSet DB_connect(){
-		
+	public static Statement DB_connect(){
+		//TODO: it has user name, pass and other info here
 		String usr = "zzhu4";
 		String pwd = "Iloveyou5201314";
 		String url = "jdbc:postgresql://155.246.89.29:5432/zzhu4";
-		ResultSet rs = null;
+		Statement stmt = null;
 		try {
 			// loding the driver
 			Class.forName("org.postgresql.Driver");
@@ -24,14 +24,15 @@ public class ConnectToDB {
 			Connection conn = DriverManager.getConnection(url, usr, pwd);
 			System.out.println("Success connecting server!");
 
-			Statement stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT * FROM Sales");
+			stmt = conn.createStatement();
+			//TODO: it has table name here, but did not use it for now
+			//ResultSet rs = stmt.executeQuery("SELECT * FROM Sales");
 		} catch (SQLException e) {
 			System.out
 					.println("Connection URL or username or password errors!");
 			e.printStackTrace();
 		}
-		return rs;
+		return stmt;
 		
 	}//end DB_connect
 	
