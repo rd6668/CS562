@@ -1,5 +1,0 @@
-cust,prod,month
-3
-1_max_quant,2_avg_quant,3_min_quant,3_max_quant
-0_avg_quant
-1-newtuple.state.equals("NY"),2-newtuple.state.equals("NJ"),3-newtuple.state.equals("CT"),2-newtuple.quant>sum_quant_0/count_quant_0
