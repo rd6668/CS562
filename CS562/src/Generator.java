@@ -17,7 +17,7 @@ public class Generator{
         //generate code part
         output.print("import java.sql.*;\n");
         output.print("import java.util.*;\n\n");
-        output.print("/*  this is generated file \n * author: Di Rem, Zhouyi Zhu, Yi Gao \n");
+        output.print("/*  this is generated file \n * author: Di Ren, Zhouyi Zhu, Yi Gao \n");
         output.print("* CS 562 final project \n */\n");
 
         //generate class dbTuple
