@@ -36,11 +36,11 @@ public class project{
                 System.out.println("is this a MF query or EMF query? enter 'mf' or 'emf' ");
                 String s = in.nextLine();
                 //MF 
-                if (s.equal("mf")){                                
+                if (s.equals("mf")){                                
                         Generator.generateCode(db_struct,query_struct);
                 }
                 //EMF
-                else if (s.equal("emf")){
+                else if (s.equals("emf")){
                         Generator2.generateCode(db_struct,query_struct);
                 }
                 //ERROR INPUT
