@@ -1,5 +1,6 @@
 cust, prod
+
 3
 1_max_quant, 2_avg_quant, 3_min_quant, 3_max_quant
 0_avg_quant
-1#newtuple.state.equals("NY"), 1#newtuple.cust.equals(temp.cust), 1#newtuple.prod.equals(temp.prod), 2#newtuple.state.equals("NJ"), 2#newtuple.cust.equals(temp.cust), 2#newtuple.prod.equals(temp.prod), 3#newtuple.state.equals("CT"), 3#newtuple.state.equals("CT"), 3#newtuple.cust.equals(temp.cust), 3#newtuple.prod.equals(temp.prod), 2#newtuple.quant>sum_quant_0/count_quant_0
+1#newtuple.state.equals("NY"), 1#newtuple.cust.equals(temp.cust), 1#newtuple.prod.equals(temp.prod), 2#newtuple.state.equals("NJ"), 2#newtuple.cust.equals(temp.cust), 2#newtuple.prod.equals(temp.prod), 3#newtuple.state.equals("CT"), 3#newtuple.cust.equals(temp.cust), 3#newtuple.prod.equals(temp.prod), 2#newtuple.quant>sum_quant_0/count_quant_0
