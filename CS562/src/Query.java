@@ -1,7 +1,17 @@
 import java.util.*;
 import java.io.*;
 
+/*
+*      CS 562 FINAL PROJECT
+*      AUTHOR: DI REN, JIAN GAO, ZHOUYI ZHU
+*       MF QUERY AND EMF QUERY
+*/
 
+/*
+*this is the class storage those query information
+*/
+
+//info save aggregate functions
 class Info{
     String aggregate="";
     String attribute="";
@@ -20,6 +30,7 @@ class Info{
     }
 }
 
+//save such that stuff which is the last line
 class Condition{
     String index;
     String condition_info;
@@ -29,6 +40,7 @@ class Condition{
     }
 }
 
+//struct to save all the query info
 class QueryStruct{
     ArrayList<String> grouping_attributes = new ArrayList<String>();
     ArrayList<String> where = new ArrayList<String>(); 
@@ -38,6 +50,7 @@ class QueryStruct{
     ArrayList<Condition> condition = new ArrayList<Condition>();
 }
 
+//deal with the input query and save them into our query sturct
 public class Query{
     static void query_process(QueryStruct qs, File file){
     try{
