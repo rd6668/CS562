@@ -1,6 +1,16 @@
 import java.util.*;
 import java.io.*;
 
+/*
+*      CS 562 FINAL PROJECT
+*      AUTHOR: DI REN, JIAN GAO, ZHOUYI ZHU
+*       MF QUERY AND EMF QUERY
+*/
+
+/*
+*this generator 2 class is for generate emf query output file
+*/
+
 public class Generator2{
     static void generateCode(HashMap<String,String> db_struct, QueryStruct qs){
         try{
@@ -9,7 +19,9 @@ public class Generator2{
         //generate code part
         output.print("import java.sql.*;\n");
         output.print("import java.util.*;\n\n");
-
+        output.print("/*  this is generated file \n * author: Di Rem, Zhouyi Zhu, Yi Gao \n");
+        output.print("* CS 562 final project \n */\n");
+                           
         //generate class dbTuple
         output.print("class dbTuple{\n");
         for (Map.Entry<String, String> entry : db_struct.entrySet())
