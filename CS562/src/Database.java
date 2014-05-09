@@ -1,5 +1,14 @@
 import java.sql.*;
 import java.util.*;
+/*
+*      CS 562 FINAL PROJECT
+*      AUTHOR: DI REN, JIAN GAO, ZHOUYI ZHU
+*       MF QUERY AND EMF QUERY
+*/
+
+/*
+*this is database class which can connect database and get database infomation schema then save it into dbinfo
+*/
 public class Database{
 	static void dbconnect(){
 	try {
@@ -10,8 +19,11 @@ public class Database{
 		exception.printStackTrace();
 	}
 	} 
+	
+	//get data base info and save into hash map
 	static void dbinfo(HashMap<String,String> db_struct){
 	try {
+		//here is database login 
 		String usr ="jiangao";
 		String pwd ="";
 		String url ="jdbc:postgresql://localhost:5432/sales";
