@@ -19,28 +19,32 @@ public class project{
                 Database.dbconnect();
                 Database.dbinfo(db_struct);
 
+                //get user input to set emf or mf 
+                Scanner in = new Scanner(System.in);
+                System.out.println("is this a MF query or EMF query? enter 'mf' or 'emf' ");
+                String s = in.nextLine();
                 /*for (Map.Entry<String, String> entry : db_struct.entrySet()){
                         //String key = entry.getKey();
                         //String value = entry.getValue();
                         System.out.printf(entry.getValue()+"\t"+entry.getKey()+"\n");
                 }*/
 
-                File file = new File("sampleQuery2.txt");
-                QueryStruct query_struct = new QueryStruct(); 
-                //read from query and get info
-                Query.query_process(query_struct, file);
-                //Query.output(query_struct);
-                
-                //get user input to set emf or mf 
-                Scanner in = new Scanner(System.in);
-                System.out.println("is this a MF query or EMF query? enter 'mf' or 'emf' ");
-                String s = in.nextLine();
                 //MF 
-                if (s.equals("mf")){                                
+                if (s.equals("mf")){     
+                        File file = new File("sampleQuery.txt");
+                        QueryStruct query_struct = new QueryStruct(); 
+                        //read from query and get info
+                        Query.query_process(query_struct, file);
+                        //Query.output(query_struct);
                         Generator.generateCode(db_struct,query_struct);
                 }
                 //EMF
                 else if (s.equals("emf")){
+                        File file = new File("sampleQuery2.txt");
+                        QueryStruct query_struct = new QueryStruct(); 
+                        //read from query and get info
+                        Query.query_process(query_struct, file);
+                        //Query.output(query_struct);
                         Generator2.generateCode(db_struct,query_struct);
                 }
                 //ERROR INPUT
