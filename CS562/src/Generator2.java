@@ -1,6 +1,5 @@
 import java.util.*;
 import java.io.*;
-
 /*
 *      CS 562 FINAL PROJECT
 *      AUTHOR: DI REN, JIAN GAO, ZHOUYI ZHU
@@ -8,9 +7,8 @@ import java.io.*;
 */
 
 /*
-*this generator 2 class is for generate emf query output file
+*this generator class is for generate mf query output file
 */
-
 public class Generator2{
     static void generateCode(HashMap<String,String> db_struct, QueryStruct qs){
         try{
@@ -21,7 +19,7 @@ public class Generator2{
         output.print("import java.util.*;\n\n");
         output.print("/*  this is generated file \n * author: Di Ren, Zhouyi Zhu, Yi Gao \n");
         output.print("* CS 562 final project \n */\n");
-                           
+        
         //generate class dbTuple
         output.print("class dbTuple{\n");
         for (Map.Entry<String, String> entry : db_struct.entrySet())
@@ -130,19 +128,19 @@ public class Generator2{
 
 
         //first while loop the add value to aggregate with index 0 and add grouping variables to the list.
-        if (qs.aggregate_function_info.size() > 0){
-            output.print("\t\trs = st.executeQuery(ret);\n");
-            output.print("\t\tmore=rs.next();\n");
-            output.print("\t\twhile(more){\n");
-            output.print("\t\t\tdbTuple newtuple = new dbTuple();\n");
-            for (Map.Entry<String, String> entry : db_struct.entrySet()){
-                if (entry.getValue().equals("String")){
-                    output.print("\t\t\tnewtuple."+entry.getKey()+" = rs.getString(\""+entry.getKey()+"\");\n");
-                }
-                if (entry.getValue().equals("int")){
-                    output.print("\t\t\tnewtuple."+entry.getKey()+" = rs.getInt(\""+entry.getKey()+"\");\n");
-                }
+        output.print("\t\trs = st.executeQuery(ret);\n");
+        output.print("\t\tmore=rs.next();\n");
+        output.print("\t\twhile(more){\n");
+        output.print("\t\t\tdbTuple newtuple = new dbTuple();\n");
+        for (Map.Entry<String, String> entry : db_struct.entrySet()){
+            if (entry.getValue().equals("String")){
+                output.print("\t\t\tnewtuple."+entry.getKey()+" = rs.getString(\""+entry.getKey()+"\");\n");
             }
+            if (entry.getValue().equals("int")){
+                output.print("\t\t\tnewtuple."+entry.getKey()+" = rs.getInt(\""+entry.getKey()+"\");\n");
+            }
+        }
+        if (qs.aggregate_function_info.size() > 0){
             for (Info info : qs.aggregate_function_info){
                 if (info.aggregate.equals("sum")){
                     output.print("\t\t\t"+info.getName()+" += newtuple."+info.attribute+";\n");
@@ -162,67 +160,67 @@ public class Generator2{
 
                 }
             }
-            boolean flag = false;
-            output.print("\t\t\tif(");
-            if (qs.where.size() == 0){
-                output.print("true");
-            }
-            else{
-                for (String temp : qs.where){
-                    if (flag == false){
-                        output.print(temp);
-                        flag = true;
-                    }
-                    else if (flag == true)
-                        output.print(" && "+temp);
-                }
-            }
-            output.print("){\n");
-            output.print("\t\t\t\tboolean found = false;\n");
-            output.print("\t\t\t\tfor (MF_structure temp : result_list){\n");
-
-            //find if the grouping attributes are already in the list
-            output.print("\t\t\t\t\tif(compare(temp.");
-            flag = false;
-            for (String temp : qs.grouping_attributes){
+        }
+        boolean flag = false;
+        output.print("\t\t\tif(");
+        if (qs.where.size() == 0){
+            output.print("true");
+        }
+        else{
+            for (String temp : qs.where){
                 if (flag == false){
-                    output.print(temp+",newtuple."+temp+")");
+                    output.print(temp);
                     flag = true;
                 }
-                else if (flag == true){
-                    output.print(" && compare(temp."+temp+",newtuple."+temp+")");
-                }
+                else if (flag == true)
+                    output.print(" && "+temp);
             }
-            flag = false;
-            output.print("){\n");
-            output.print("\t\t\t\t\t\tfound=true;\n");
-            output.print("\t\t\t\t\t\tbreak;\n");
-            output.print("\t\t\t\t\t}\n");
-            output.print("\t\t\t\t}\n");
-            output.print("\t\t\t\tif (found == false){\n");
-            output.print("\t\t\t\t\tMF_structure newrow = new MF_structure();\n");
-            for (String temp : qs.grouping_attributes){
-                output.print("\t\t\t\t\tnewrow."+temp+" = newtuple."+temp+";\n");
-            }
-            for (Info temp : qs.select_attr_info){
-                if (temp.aggregate.equals("avg")){
-                    output.print("\t\t\t\t\tnewrow.sum_"+temp.attribute+"_"+temp.index+" = 0;\n");
-                    output.print("\t\t\t\t\tnewrow.count_"+temp.attribute+"_"+temp.index+" = 0;\n");
-                }
-                if (temp.aggregate.equals("sum") || temp.aggregate.equals("max"))
-                    output.print("\t\t\t\t\tnewrow."+temp.getName()+" = 0;\n");
-                if (temp.aggregate.equals("min"))
-                    output.print("\t\t\t\t\tnewrow."+temp.getName()+" = Integer.MAX_VALUE;\n");
-                if (temp.aggregate.equals("count"))
-                    output.print("\t\t\t\t\tnewrow."+temp.getName()+" = 0;\n");
-            }
-            output.print("\t\t\t\t\tresult_list.add(newrow);\n");
-            output.print("\t\t\t\t}\n");
-            output.print("\t\t\t}\n");
-            output.print("\t\t\tmore=rs.next();\n");
-            output.print("\t\t}\n\n");
-
         }
+        output.print("){\n");
+        output.print("\t\t\t\tboolean found = false;\n");
+        output.print("\t\t\t\tfor (MF_structure temp : result_list){\n");
+
+        //find if the grouping attributes are already in the list
+        output.print("\t\t\t\t\tif(compare(temp.");
+        flag = false;
+        for (String temp : qs.grouping_attributes){
+            if (flag == false){
+                output.print(temp+",newtuple."+temp+")");
+                flag = true;
+            }
+            else if (flag == true){
+                output.print(" && compare(temp."+temp+",newtuple."+temp+")");
+            }
+        }
+        flag = false;
+        output.print("){\n");
+        output.print("\t\t\t\t\t\tfound=true;\n");
+        output.print("\t\t\t\t\t\tbreak;\n");
+        output.print("\t\t\t\t\t}\n");
+        output.print("\t\t\t\t}\n");
+        output.print("\t\t\t\tif (found == false){\n");
+        output.print("\t\t\t\t\tMF_structure newrow = new MF_structure();\n");
+        for (String temp : qs.grouping_attributes){
+            output.print("\t\t\t\t\tnewrow."+temp+" = newtuple."+temp+";\n");
+        }
+        for (Info temp : qs.select_attr_info){
+            if (temp.aggregate.equals("avg")){
+                output.print("\t\t\t\t\tnewrow.sum_"+temp.attribute+"_"+temp.index+" = 0;\n");
+                output.print("\t\t\t\t\tnewrow.count_"+temp.attribute+"_"+temp.index+" = 0;\n");
+            }
+            if (temp.aggregate.equals("sum") || temp.aggregate.equals("max"))
+                output.print("\t\t\t\t\tnewrow."+temp.getName()+" = 0;\n");
+            if (temp.aggregate.equals("min"))
+                output.print("\t\t\t\t\tnewrow."+temp.getName()+" = Integer.MAX_VALUE;\n");
+            if (temp.aggregate.equals("count"))
+                output.print("\t\t\t\t\tnewrow."+temp.getName()+" = 0;\n");
+        }
+        output.print("\t\t\t\t\tresult_list.add(newrow);\n");
+        output.print("\t\t\t\t}\n");
+        output.print("\t\t\t}\n");
+        output.print("\t\t\tmore=rs.next();\n");
+        output.print("\t\t}\n\n");
+
 
         //generate core code!
         for (int i=1; i<=qs.grouping_variable_number; i++){
@@ -240,7 +238,7 @@ public class Generator2{
                 }
             }
 
-            boolean flag = false;
+            flag = false;
             output.print("\t\t\tif(");
             if (qs.where.size() == 0){
                 output.print("true");
